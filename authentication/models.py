@@ -6,8 +6,6 @@ from django.contrib.auth.models import (
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
-from rest_framework_jwt.settings import api_settings
-
 from system.models import BaseModel, SoftDeleteModel
 
 
@@ -20,16 +18,8 @@ class UserManager(BaseUserManager):
             raise ValueError(_('Users must have an email address'))
 
         user = self.model(email=self.normalize_email(email), name=name,)
-
         user.set_password(password)
         user.save(using=self._db)
-
-        jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
-        jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
-
-        payload = jwt_payload_handler(user)
-        user.token = jwt_encode_handler(payload)
-
         return user
 
     def create_superuser(self, email, name, password):
@@ -38,7 +28,6 @@ class UserManager(BaseUserManager):
         단, 최상위 사용자이므로 권한을 부여한다. 
         """
         user = self.create_user(email=email, password=password, name=name,)
-
         user.is_superuser = True
         user.save(using=self._db)
         return user
