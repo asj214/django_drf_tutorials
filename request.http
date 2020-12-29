@@ -1,0 +1,25 @@
+@BASE_URL = http://127.0.0.1:8000
+
+###
+# register
+POST {{BASE_URL}}/api/auth/register
+Content-Type: application/json
+
+{
+    "email": "sjahn@ktown4u.com",
+    "name": "sjahn",
+    "password": "rewq1234"
+}
+
+###
+# @name login
+POST {{BASE_URL}}/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "asj214@naver.com",
+    "password": "1234"
+}
+
+###
+@token = {{login.response.body.token}}
