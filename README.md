@@ -1,4 +1,4 @@
-# django_drf_tutorials
+# django_drf_tutorials  
 django, drf, tutorial
 
 ### 개발 환경  
@@ -6,7 +6,7 @@ django, drf, tutorial
 - django: 3.1.4
 - mysql: 5.8
 
-### 설치
+### 설치  
 ```sh
 # clone & move
 git clone git@github.com:asj214/django_drf_tutorials.git && cd django_drf_tutorials
@@ -40,10 +40,32 @@ DATABASES = {
 }
 ```
 
-### database migration
+### database migration  
 ```sql
 CREATE DATABASE django_drf_tutorials;
 ```
 ```sh
+python manage.py migrate
+```
+
+### run  
+```sh
+python manage.py runserver
+# or
+python manage.py runserver_plus
+```
+
+### commands  
+```sh
+# create new app Ex. post
+django-admin startapp post
+
+# database make migration all app
+python manage.py makemigrations
+
+# database make migration post app
+python manage.py makemigrations post
+
+# migrate
 python manage.py migrate
 ```

@@ -7,3 +7,4 @@ mysqlclient==2.0.2
 PyJWT==1.7.1
 pytz==2020.5
 sqlparse==0.4.1
+Werkzeug==1.0.1
