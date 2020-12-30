@@ -6,7 +6,7 @@ POST {{BASE_URL}}/api/auth/register
 Content-Type: application/json
 
 {
-    "email": "sjahn1@ktown4u.com",
+    "email": "sjahn2@ktown4u.com",
     "name": "sjahn",
     "password": "rewq1234"
 }
@@ -22,13 +22,12 @@ Content-Type: application/json
 }
 
 ###
-@token = {{login.response.body.token}}
+@token = {{login.response.body.user.token}}
 
 ###
 # list
 GET {{BASE_URL}}/api/posts
 ?page=1
-&user_id=2
 Content-Type: application/json
 Authorization: Bearer {{token}}
 

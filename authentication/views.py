@@ -7,13 +7,14 @@ from rest_framework.permissions import (
     IsAuthenticatedOrReadOnly,
 )
 from .models import User
+from .renderers import UserRenderer
 from .serializers import RegisterSerializer, LoginSerializer
 
 
 # Create your views here.
 class RegisterApiView(APIView):
-
     permission_classes = (AllowAny,)
+    renderer_classes = (UserRenderer,)
     serializer_class = RegisterSerializer
 
     def post(self, request):
@@ -32,8 +33,8 @@ class RegisterApiView(APIView):
 
 
 class LoginApiView(APIView):
-
     permission_classes = (AllowAny,)
+    renderer_classes = (UserRenderer,)
     serializer_class = LoginSerializer
 
     def post(self, request):
