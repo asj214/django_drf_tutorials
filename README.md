@@ -11,15 +11,37 @@ django, drf, tutorial
 - [Django Rest Framework](https://www.django-rest-framework.org/)
 - [Django Extensions](https://django-extensions.readthedocs.io/en/latest/)
 
+
+### 가상화 Mac  
+```sh
+# create venv
+python -m venv .venv
+
+# activate
+. .venv/bin/activate
+
+# deactivate
+deactivate
+```
+
+### 가상화 Windows  
+```sh
+# create venv
+python -m venv venv
+
+# activate
+venv\Scripts\activate
+
+# deactivate
+deactivate
+```
+
 ### 설치  
 ```sh
 # clone & move
 git clone git@github.com:asj214/django_drf_tutorials.git && cd django_drf_tutorials
 
 # virtualenv
-python -m venv .venv
-
-# activate
 . .venv/bin/activate
 
 # pip upgrade
