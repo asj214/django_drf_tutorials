@@ -50,3 +50,20 @@ Authorization: Bearer {{token}}
 GET {{BASE_URL}}/api/posts/1
 Content-Type: application/json
 Authorization: Bearer {{token}}
+
+###
+# update
+PUT {{BASE_URL}}/api/posts/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "title": "modify article 444",
+    "body": "hello wowowowowo"
+}
+
+###
+# delete
+DELETE {{BASE_URL}}/api/posts/6
+Content-Type: application/json
+Authorization: Bearer {{token}}
