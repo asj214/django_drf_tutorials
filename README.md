@@ -6,6 +6,11 @@ django, drf, tutorial
 - django: 3.1.4
 - mysql: 5.8
 
+### 주요 패키지  
+-[Django](https://docs.djangoproject.com/ko/3.1/intro/)
+-[Django Rest Framework](https://www.django-rest-framework.org/)
+-[Django Extensions](https://django-extensions.readthedocs.io/en/latest/)
+
 ### 설치  
 ```sh
 # clone & move

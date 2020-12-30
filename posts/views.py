@@ -17,10 +17,19 @@ class PostApiView(viewsets.ModelViewSet):
     renderer_classes = (PostRenderer,)
     queryset = Post.objects.prefetch_related('user')
 
+    def get_queryset(self):
+        query_set = self.queryset
+
+        user_id = self.request.query_params.get('user_id', None)
+        if user_id is not None:
+            query_set = query_set.filter(user_id=user_id)
+
+        return query_set
+
     def list(self, request):
         serializer_context = {'request': request}
 
-        page = self.paginate_queryset(self.queryset)
+        page = self.paginate_queryset(self.get_queryset())
         serializer = self.serializer_class(page, context=serializer_context, many=True)
 
         return self.get_paginated_response(serializer.data)
