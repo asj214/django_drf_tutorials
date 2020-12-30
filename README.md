@@ -57,11 +57,11 @@ pip install -r requirements.txt
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DJANGO_DB_NAME', 'django_drf_tutorials'),
-        'USER': os.environ.get('DJANGO_DB_USERNAME', 'root'),
-        'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD', ''),
-        'HOST': os.environ.get('DJANGO_DB_HOST', '127.0.0.1'),
-        'PORT': os.environ.get('DJANGO_DB_PORT', '3306'),
+        'NAME': env('DJANGO_DB_NAME', default='django_drf_tutorials'),
+        'USER': env('DJANGO_DB_USERNAME', default='root'),
+        'PASSWORD': env('DJANGO_DB_PASSWORD', default=''),
+        'HOST': env('DJANGO_DB_HOST', default='127.0.0.1'),
+        'PORT': env('DJANGO_DB_PORT', default='3306'),
         'OPTIONS': {'charset': 'utf8mb4',},
     }
 }
