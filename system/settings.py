@@ -9,9 +9,11 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-import os
 import datetime
 from pathlib import Path
+from environ import Env
+env = Env()
+env.read_env(env_file='.env')
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '9&s%crvqt)7^dyrnw6c3v**ey-+0c#w)kim0hkvmwdxm&_-d2q'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env('DEBUG', default=False)
 
 ALLOWED_HOSTS = []
 
@@ -83,11 +85,11 @@ WSGI_APPLICATION = 'system.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('DJANGO_DB_NAME', 'django_drf_tutorials'),
-        'USER': os.environ.get('DJANGO_DB_USERNAME', 'root'),
-        'PASSWORD': os.environ.get('DJANGO_DB_PASSWORD', ''),
-        'HOST': os.environ.get('DJANGO_DB_HOST', '127.0.0.1'),
-        'PORT': os.environ.get('DJANGO_DB_PORT', '3306'),
+        'NAME': env('DJANGO_DB_NAME', default='django_drf_tutorials'),
+        'USER': env('DJANGO_DB_USERNAME', default='root'),
+        'PASSWORD': env('DJANGO_DB_PASSWORD', default=''),
+        'HOST': env('DJANGO_DB_HOST', default='127.0.0.1'),
+        'PORT': env('DJANGO_DB_PORT', default='3306'),
         'OPTIONS': {'charset': 'utf8mb4',},
     }
 }
