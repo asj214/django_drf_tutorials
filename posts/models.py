@@ -19,6 +19,9 @@ class Post(BaseModel, SoftDeleteModel):
         verbose_name = _('post')
         verbose_name_plural = _('posts')
         ordering = ['-created_at', '-updated_at']
+        indexes = [
+            models.Index(fields=['deleted_at']),
+        ]
 
     def __str__(self):
         return self.name
