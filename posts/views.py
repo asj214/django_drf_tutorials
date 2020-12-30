@@ -15,7 +15,7 @@ class PostApiView(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = PostSerializer
     renderer_classes = (PostRenderer,)
-    queryset = Post.objects.select_related('user')
+    queryset = Post.objects.prefetch_related('user')
 
     def list(self, request):
         serializer_context = {"request": request}
