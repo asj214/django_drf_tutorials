@@ -23,3 +23,30 @@ Content-Type: application/json
 
 ###
 @token = {{login.response.body.token}}
+
+###
+# list
+GET {{BASE_URL}}/api/posts
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "page": 1
+}
+
+###
+# create
+POST {{BASE_URL}}/api/posts
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "title": "hello article",
+    "body": "test contents"
+}
+
+###
+# show
+GET {{BASE_URL}}/api/posts/1
+Content-Type: application/json
+Authorization: Bearer {{token}}

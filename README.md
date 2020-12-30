@@ -9,7 +9,7 @@ django, drf, tutorial
 ### 설치  
 ```sh
 # clone & move
-git clone git@github.com:asj214/django_drf_tutorials.git && cd django_drf_tutorials
+git clone https://github.com/HMInternational/ktown4u-api.git && cd ktown4u-api
 
 # virtualenv
 python -m venv .venv
