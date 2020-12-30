@@ -47,7 +47,7 @@ DATABASES = {
 
 ### database migration  
 ```sql
-CREATE DATABASE django_drf_tutorials;
+CREATE DATABASE `django_drf_tutorials`;
 ```
 ```sh
 python manage.py migrate
