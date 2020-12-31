@@ -51,20 +51,9 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-### settings.py 작성  
-```python
-...
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': env('DJANGO_DB_NAME', default='django_drf_tutorials'),
-        'USER': env('DJANGO_DB_USERNAME', default='root'),
-        'PASSWORD': env('DJANGO_DB_PASSWORD', default=''),
-        'HOST': env('DJANGO_DB_HOST', default='127.0.0.1'),
-        'PORT': env('DJANGO_DB_PORT', default='3306'),
-        'OPTIONS': {'charset': 'utf8mb4',},
-    }
-}
+### .env 
+```sh
+cp .env.example .env
 ```
 
 ### database migration  
