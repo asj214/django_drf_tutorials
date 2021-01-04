@@ -45,7 +45,7 @@ Authorization: Bearer {{token}}
 
 ###
 # show
-GET {{BASE_URL}}/api/posts/1
+GET {{BASE_URL}}/api/posts/34
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -65,3 +65,16 @@ Authorization: Bearer {{token}}
 DELETE {{BASE_URL}}/api/posts/6
 Content-Type: application/json
 Authorization: Bearer {{token}}
+
+
+###
+# comment.create
+POST {{BASE_URL}}/api/comments
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "commentable_id": 34,
+    "commentable_type": "posts",
+    "body": "test comments"
+}

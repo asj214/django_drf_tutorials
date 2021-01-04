@@ -15,7 +15,10 @@ class PostApiView(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     serializer_class = PostSerializer
     renderer_classes = (PostRenderer,)
-    queryset = Post.objects.prefetch_related('user')
+    queryset = Post.objects.prefetch_related(
+        'user',
+        'comments__user'
+    )
 
     def get_queryset(self):
         query_set = self.queryset

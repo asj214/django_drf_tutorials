@@ -1,7 +1,7 @@
 from django.db import models
-from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
 from system.models import BaseModel, SoftDeleteModel
+from django.contrib.contenttypes.fields import GenericRelation
+from comments.models import Comment
 
 
 class Post(BaseModel, SoftDeleteModel):
@@ -11,13 +11,12 @@ class Post(BaseModel, SoftDeleteModel):
         # db_index=False,
         db_constraint=False
     )
-    title = models.CharField(verbose_name=_('title'), max_length=75)
+    title = models.CharField(max_length=75)
     body = models.TextField()
+    comments = GenericRelation(Comment, object_id_field='commentable_id', content_type_field='commentable_type')
 
     class Meta:
         db_table = 'posts'
-        verbose_name = _('post')
-        verbose_name_plural = _('posts')
         ordering = ['-created_at', '-updated_at']
         indexes = [
             models.Index(fields=['deleted_at']),

@@ -61,3 +61,4 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel, SoftDeleteModel):
         'Is the user a member of staff?'
         # Simplest possible answer: All superusers are staff
         return self.is_superuser
+
