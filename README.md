@@ -69,6 +69,8 @@ python manage.py migrate
 python manage.py runserver
 # or
 python manage.py runserver_plus
+# or
+gunicorn --bind 0.0.0.0:8000 system.wsgi:application
 ```
 
 ### commands  
