@@ -33,9 +33,9 @@ class Comment(BaseModel, SoftDeleteModel):
     class Meta:
         db_table = 'comments'
         ordering = ['-created_at', '-updated_at']
-        # indexes = [
-        #     models.Index(fields=['commentable_id', 'commentable_type', 'deleted_at']),
-        # ]
+        indexes = [
+            models.Index(fields=['commentable_id', 'commentable_type', 'deleted_at']),
+        ]
 
     def __str__(self):
         return self.name
