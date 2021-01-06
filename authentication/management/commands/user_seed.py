@@ -12,10 +12,11 @@ class Command(BaseCommand):
     
     def handle(self, *args, **options):
         times = options.get('times')
-        seeder = Seed.seeder()
+        seeder = Seed.seeder(locale='ko_KR')
         seeder.add_entity(User, times, {
             'name': lambda x: seeder.faker.name(),
             'password': make_password('rewq1234'),
-            "is_superuser": False
+            'is_superuser': False,
+            'deleted_at': None
         })
         seeder.execute()

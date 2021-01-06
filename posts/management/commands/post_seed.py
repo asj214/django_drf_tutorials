@@ -18,6 +18,7 @@ class Command(BaseCommand):
 
         seeder = Seed.seeder('ko_KR')
         seeder.add_entity(Post, times, {
-            'user': lambda x: random.choice(users)
+            'user': lambda x: random.choice(users),
+            'deleted_at': None
         })
         seeder.execute()

@@ -87,3 +87,15 @@ python manage.py makemigrations post
 # migrate
 python manage.py migrate
 ```
+
+### seeds  
+```sh
+# user seed ex. create user 100
+python manage.py user_seed --times 100
+
+# post seed ex. create post 10000
+python manage.py post_seed --times 10000
+
+# comment seed ex. create comment 100000
+python manage.py comment_seed --times 100000
+```
