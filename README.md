@@ -73,19 +73,28 @@ python manage.py runserver_plus
 gunicorn --bind 0.0.0.0:8000 system.wsgi:application
 ```
 
-### commands  
+### commands basic  
 ```sh
 # create new app Ex. post
 django-admin startapp post
 
-# database make migration all app
+# create superuser
+python manage.py createsuperuser
+```
+
+### commands database  
+```sh
+# make migration file all apps
 python manage.py makemigrations
 
-# database make migration post app
-python manage.py makemigrations post
+# make migration file Specific app Ex. posts
+python manage.py makemigrations posts
 
 # migrate
 python manage.py migrate
+
+# migration file merge Ex. posts
+python manage.py squashmigrations posts 0006
 ```
 
 ### seeds  
