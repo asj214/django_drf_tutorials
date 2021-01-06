@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+import os
 import datetime
 from pathlib import Path
 from environ import Env
@@ -47,7 +48,8 @@ INSTALLED_APPS = [
     'django_seed',
     'authentication',
     'posts',
-    'comments'
+    'comments',
+    'attachments'
 ]
 
 MIDDLEWARE = [
@@ -173,3 +175,12 @@ LOGGING = {
         },
     }
 }
+
+# 각 media 파일에 대한 URL Prefix
+MEDIA_URL = '/media/' # 항상 / 로 끝나도록 설정
+# MEDIA_URL = 'http://static.myservice.com/media/' 다른 서버로 media 파일 복사시
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# 파일 업로드 사이즈 100M ( 100 * 1024 * 1024 )
+#FILE_UPLOAD_MAX_MEMORY_SIZE = 104857600
