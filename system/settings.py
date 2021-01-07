@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'django_seed',
+    'storages',
     'authentication',
     'posts',
     'comments',
@@ -132,11 +133,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.1/howto/static-files/
-
-STATIC_URL = '/static/'
-
 AUTH_USER_MODEL = 'authentication.User'
 
 REST_FRAMEWORK = {
@@ -176,6 +172,10 @@ LOGGING = {
     }
 }
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/3.1/howto/static-files/
+# STATIC_URL = '/static/'
+
 # 각 media 파일에 대한 URL Prefix
 MEDIA_URL = '/media/' # 항상 / 로 끝나도록 설정
 # MEDIA_URL = 'http://static.myservice.com/media/' 다른 서버로 media 파일 복사시
@@ -184,3 +184,28 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # 파일 업로드 사이즈 100M ( 100 * 1024 * 1024 )
 #FILE_UPLOAD_MAX_MEMORY_SIZE = 104857600
+
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3StaticStorage'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_S3_SECURE_URLS = True
+AWS_QUERYSTRING_AUTH = False     # don't add complex authentication-related query parameters for requests
+
+AWS_ACCESS_KEY = env('AWS_ACCESS_KEY', default='AWS_ACCESS_KEY')
+AWS_SECRET_KEY = env('AWS_SECRET_KEY', default='AWS_SECRET_KEY')
+S3_BUCKET_NAME = env('S3_BUCKET_NAME', default='S3_BUCKET_NAME')
+
+S3_URL = 'https://{0}.s3.amazonaws.com'.format(S3_BUCKET_NAME)
+
+STATIC_URL = '{0}/{1}/'.format(S3_URL, 'sjahn')
+
+
+
+'''
+https://
+elasticbeanstalk-ap-northeast-2-203806442400.
+s3.ap-northeast-2.
+amazonaws.com/sjahn/C379CD3F-3CB5-49EF-AE6D-5E482317B689.jpeg
+'''

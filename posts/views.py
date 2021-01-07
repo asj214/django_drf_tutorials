@@ -17,7 +17,8 @@ class PostApiView(viewsets.ModelViewSet):
     renderer_classes = (PostRenderer,)
     queryset = Post.objects.prefetch_related(
         'user',
-        'comments__user'
+        'comments__user',
+        'attachments'
     )
 
     def get_queryset(self):

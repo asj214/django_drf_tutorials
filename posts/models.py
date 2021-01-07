@@ -2,6 +2,7 @@ from django.db import models
 from system.models import BaseModel, SoftDeleteModel
 from django.contrib.contenttypes.fields import GenericRelation
 from comments.models import Comment
+from attachments.models import Attachment
 
 
 class Post(BaseModel, SoftDeleteModel):
@@ -14,6 +15,7 @@ class Post(BaseModel, SoftDeleteModel):
     title = models.CharField(max_length=75)
     body = models.TextField()
     comments = GenericRelation(Comment, object_id_field='commentable_id', content_type_field='commentable_type')
+    attachments = GenericRelation(Attachment, object_id_field='attachmentable_id', content_type_field='attachmentable_type')
 
     class Meta:
         db_table = 'posts'
