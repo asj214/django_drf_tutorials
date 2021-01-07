@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'system.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'mysql.connector.django',
         'NAME': env('DJANGO_DB_NAME', default='django_drf_tutorials'),
         'USER': env('DJANGO_DB_USERNAME', default='root'),
         'PASSWORD': env('DJANGO_DB_PASSWORD', default=''),
