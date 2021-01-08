@@ -8,7 +8,7 @@ class AttachmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Attachment
-        fields = ('id', 'name', 'path', 'created_at')
+        fields = ('id', 'attachmentable_type', 'attachmentable_id', 'name', 'path', 'created_at')
     
     def create(self, validated_data):
         user = self.context.get('user', None)

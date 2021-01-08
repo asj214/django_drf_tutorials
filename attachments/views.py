@@ -37,6 +37,8 @@ class CreateAttachmentApiView(APIView):
             'path': path
         }
 
+        print(serializer_data)
+
         serializer = self.serializer_class(
             data=serializer_data, context=serializer_context
         )
