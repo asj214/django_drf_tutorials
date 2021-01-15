@@ -5,7 +5,7 @@ from django.contrib.auth.models import (
 )
 from django.db import models
 from django.utils import timezone
-from django.utils.translation import ugettext_lazy as _
+# from django.utils.translation import ugettext_lazy as _
 from system.models import BaseModel, SoftDeleteModel
 
 
@@ -15,7 +15,7 @@ class UserManager(BaseUserManager):
         주어진 이메일, 닉네임, 비밀번호 등 개인정보로 User 인스턴스 생성
         """
         if not email:
-            raise ValueError(_('Users must have an email address'))
+            raise ValueError('Users must have an email address')
 
         user = self.model(email=self.normalize_email(email), name=name,)
         user.set_password(password)
@@ -35,10 +35,11 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin, BaseModel, SoftDeleteModel):
     email = models.EmailField(
-        verbose_name=_('Email address'), max_length=255, unique=True,
+        verbose_name='Email address', max_length=255, unique=True,
     )
-    name = models.CharField(verbose_name=_('name'), max_length=30)
-    is_active = models.BooleanField(verbose_name=_('Is active'), default=True)
+    name = models.CharField(verbose_name='name', max_length=30)
+    is_active = models.BooleanField(verbose_name='Is active', default=True)
+    level = models.IntegerField(verbose_name='level', default=100)
 
     objects = UserManager()
 
@@ -49,8 +50,8 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel, SoftDeleteModel):
 
     class Meta:
         db_table = 'users'
-        verbose_name = _('user')
-        verbose_name_plural = _('users')
+        verbose_name = 'user'
+        verbose_name_plural = 'users'
         ordering = ['-created_at', '-updated_at']
 
     def __str__(self):

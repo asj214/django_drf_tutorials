@@ -78,3 +78,25 @@ Authorization: Bearer {{token}}
     "commentable_type": "posts",
     "body": "test comments"
 }
+
+
+### 
+# reference.list
+GET {{BASE_URL}}/api/references
+?name=user_level
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+### 
+# reference.create
+POST {{BASE_URL}}/api/references
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name": "user_level",
+    "key": "manager",
+    "value": "500",
+    "order": 500
+}

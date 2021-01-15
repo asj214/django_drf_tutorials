@@ -9,9 +9,12 @@ class BaseRenderer(JSONRenderer):
     pagination_object_count = 'count'
 
     def render(self, data, media_type=None, renderer_context=None):
+
+        is_dict = isinstance(data, dict)
+
         if data is None:
             return None
-        elif data.get('results', None) is not None:
+        elif is_dict and data.get('results', None) is not None:
             return json.dumps({
                 self.pagination_object_label: data['results'],
                 self.pagination_count_label: data['count']
@@ -21,7 +24,7 @@ class BaseRenderer(JSONRenderer):
         # or something similar), `data` will contain an `errors` key. We want
         # the default JSONRenderer to handle rendering errors, so we need to
         # check for this case.
-        elif data.get('errors', None) is not None:
+        elif is_dict and data.get('errors', None) is not None:
             return super(BaseRenderer, self).render(data)
         else:
             return json.dumps({

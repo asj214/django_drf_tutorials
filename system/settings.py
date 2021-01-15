@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'authentication',
     'posts',
     'comments',
-    'attachments'
+    'attachments',
+    'references'
 ]
 
 MIDDLEWARE = [
@@ -200,12 +201,3 @@ S3_BUCKET_NAME = env('S3_BUCKET_NAME', default='S3_BUCKET_NAME')
 S3_URL = 'https://{0}.s3.amazonaws.com'.format(S3_BUCKET_NAME)
 
 STATIC_URL = '{0}/{1}/'.format(S3_URL, 'sjahn')
-
-
-
-'''
-https://
-elasticbeanstalk-ap-northeast-2-203806442400.
-s3.ap-northeast-2.
-amazonaws.com/sjahn/C379CD3F-3CB5-49EF-AE6D-5E482317B689.jpeg
-'''
