@@ -1,0 +1,32 @@
+@BASE_URL = http://127.0.0.1:8000
+
+###
+# register
+POST {{BASE_URL}}/api/users/register
+Content-Type: application/json
+
+{
+    "email": "asj4214@ktown4u.com",
+    "name": "sjahn",
+    "password": "rewq1234"
+}
+
+
+###
+# @name login
+POST {{BASE_URL}}/api/users/login
+Content-Type: application/json
+
+{
+    "email": "sjahn@ktown4u.com",
+    "password": "rewq1234"
+}
+
+###
+@token = {{login.response.body.user.token}}
+
+
+###
+GET {{BASE_URL}}/api/users
+Content-Type: application/json
+Authorization: Bearer {{token}}

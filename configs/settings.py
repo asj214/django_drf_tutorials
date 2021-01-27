@@ -10,9 +10,13 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 from os import path
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
+from environ import Env
 
+
+env = Env()
+env.read_env(env_file='.env')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,6 +39,8 @@ ALLOWED_HOSTS = [
 
 # Application definition
 
+AUTH_USER_MODEL = 'apps.User'
+
 INSTALLED_APPS = [
     'apps',
     'django.contrib.admin',
@@ -47,8 +53,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
 ]
-
-AUTH_USER_MODEL = 'apps.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -95,12 +99,12 @@ WSGI_APPLICATION = 'configs.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'mysql.connector.django',
-        'NAME': 'django_drf_tutorials',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',
-        'PORT': 3306,
-        'OPTIONS': {'charset': 'utf8mb4',},
+        'NAME': env('DJANGO_DB_NAME', default='django_drf_tutorials'),
+        'USER': env('DJANGO_DB_USERNAME', default='root'),
+        'PASSWORD': env('DJANGO_DB_PASSWORD', default=''),
+        'HOST': env('DJANGO_DB_HOST', default='127.0.0.1'),
+        'PORT': env('DJANGO_DB_PORT', default='3306'),
+        # 'OPTIONS': {'charset': 'utf8mb4',},
     },
 }
 
@@ -142,6 +146,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': ['rest_framework.permissions.IsAuthenticated'],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 15,
+}
+
+JWT_AUTH = {
+    'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+    'JWT_EXPIRATION_DELTA': timedelta(days=env.int('JWT_TOKEN_EXPIRE_DAY', 5)),
+}
+
 
 # logs
 LOG_FILE = '{:%Y%m%d}.info.log'.format(datetime.now())
