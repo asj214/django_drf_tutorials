@@ -4,8 +4,8 @@ from rest_framework.renderers import JSONRenderer
 
 class BaseRenderer(JSONRenderer):
     charset = 'utf-8'
-    object_label = 'object'
-    pagination_object_label = 'objects'
+    object_label = 'result'
+    pagination_object_label = 'results'
     pagination_object_count = 'count'
 
     def render(self, data, media_type=None, renderer_context=None):
@@ -20,10 +20,6 @@ class BaseRenderer(JSONRenderer):
                 self.pagination_count_label: data['count']
             })
 
-        # If the view throws an error (such as the user can't be authenticated
-        # or something similar), `data` will contain an `errors` key. We want
-        # the default JSONRenderer to handle rendering errors, so we need to
-        # check for this case.
         elif is_dict and data.get('errors', None) is not None:
             return super(BaseRenderer, self).render(data)
         else:
