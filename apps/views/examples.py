@@ -1,24 +1,37 @@
-from rest_framework import status, viewsets
-from rest_framework.decorators import action
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from configs.utils import (
     aes_encrypt,
     aes_decrypt
 )
+from configs.redis_connect import redis
 
 
-class AesCryptoView(viewsets.ViewSet):
+class AesCryptoEncryptView(APIView):
     permission_classes = (AllowAny,)
 
-    @action(methods=['POST'], detail=True)
-    def encrypt(self, request):
+    def post(self, request):
         word = request.data.get('word', None)
         encrypt = aes_encrypt(word)
         return Response({'word': word, 'encrypt': encrypt})
 
-    @action(methods=['GET'], detail=True)
-    def decrypt(self, request):
-        encrypt = request.query_params.get('encrypt', None)
+
+class AesCryptoDecryptView(APIView):
+    permission_classes = (AllowAny,)
+
+    def post(self, request):
+        encrypt = request.data.get('encrypt', None)
         decrypt = aes_decrypt(encrypt)
         return Response({'encrypt': encrypt, 'decrypt': decrypt})
+
+
+class RedisView(APIView):
+    permission_classes = (AllowAny,)
+
+    def post(self, request):
+
+
+        return Response()
+        # redis.hset('ktown4u:authentications', 'token', )
+        # return Response({'foo': redis.hget('ktown4u:authentications', 'token')})

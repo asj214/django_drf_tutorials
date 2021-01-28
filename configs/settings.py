@@ -9,8 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-from os import path
-from datetime import datetime, timedelta
+from datetime import timedelta
 from pathlib import Path
 from environ import Env
 
@@ -108,6 +107,9 @@ DATABASES = {
     },
 }
 
+REDIS_HOST=env('REDIS_HOST', default='127.0.0.1')
+REDIS_PORT=env('REDIS_PORT', default='6379')
+REDIS_DB=env('REDIS_DB', default='0')
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators

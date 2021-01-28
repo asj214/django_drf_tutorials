@@ -7,7 +7,6 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from configs.renderers import BaseRenderer
 from apps.models import User
-# from apps.renderers import UserRenderer, ErrorRenderer
 from apps.serializers import (
     RegisterSerializer,
     LoginSerializer,

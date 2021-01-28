@@ -1,12 +1,9 @@
-import boto3
 from base64 import b64encode, b64decode
 from hashlib import sha256
 from Crypto.Cipher import AES
 from Crypto.Random import new as Random
-from system.settings import (
+from configs.settings import (
     SECRET_KEY,
-    AWS_ACCESS_KEY,
-    AWS_SECRET_KEY,
 )
 
 

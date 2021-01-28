@@ -18,7 +18,7 @@ POST {{BASE_URL}}/api/users/login
 Content-Type: application/json
 
 {
-    "email": "sjahn@ktown4u.com",
+    "email": "asj214@naver.com",
     "password": "rewq1234"
 }
 
@@ -29,3 +29,28 @@ Content-Type: application/json
 GET {{BASE_URL}}/api/users
 Content-Type: application/json
 Authorization: Bearer {{token}}
+
+
+
+###
+# aes crypto encrypt
+POST {{BASE_URL}}/api/examples/aescrypto/encrypt
+Content-Type: application/json
+
+{
+    "word": "hello world"
+}
+
+###
+# aes crypto decrypt
+POST {{BASE_URL}}/api/examples/aescrypto/decrypt
+Content-Type: application/json
+
+{
+    "encrypt": "DiDp25udVdvrSDbFWWMLpMRClLISmQvXo+xMrSOmq7M="
+}
+
+###
+# redis set
+POST {{BASE_URL}}/api/examples/redis
+Content-Type: application/json
