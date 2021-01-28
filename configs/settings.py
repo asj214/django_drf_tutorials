@@ -152,13 +152,13 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 15,
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
     ),
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 15,
-    'EXCEPTION_HANDLER': 'configs.utils.core_exception_handler'
+    'EXCEPTION_HANDLER': 'configs.exception_handlers.core_exception_handler'
 }
 
 JWT_AUTH = {
@@ -167,14 +167,7 @@ JWT_AUTH = {
 }
 
 
-# logs
-LOG_FILE = '{:%Y%m%d}.info.log'.format(datetime.now())
-LOG_PATH = path.join(
-    path.dirname(path.dirname(__file__)),
-    'static/logs',
-    LOG_FILE
-)
-
+# database query logs
 LOGGING = {
     'version': 1,
     # 기존의 로깅 설정을 비활성화 할 것인가?
@@ -184,16 +177,10 @@ LOGGING = {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
         },
-        # 'file': {
-        #     'level': 'DEBUG',
-        #     'class': 'logging.FileHandler',
-        #     'filename': LOG_PATH
-        # },
     },
     'loggers': {
         'django.db.backends': {
             'level': 'DEBUG',
-            # 'handlers': ['console', 'file'],
             'handlers': ['console'],
         },
     }
