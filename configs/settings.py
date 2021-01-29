@@ -165,6 +165,10 @@ REST_FRAMEWORK = {
 
 JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
+    # 토큰 새로 고침 기능을 활성화합니다
+    'JWT_ALLOW_REFRESH': False,
+    # 토큰 만료 시간 설정
+    'JWT_VERIFY_EXPIRATION': True,
     'JWT_EXPIRATION_DELTA': timedelta(days=env.int('JWT_TOKEN_EXPIRE_DAY', 5)),
 }
 
