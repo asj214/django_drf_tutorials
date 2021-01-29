@@ -41,7 +41,6 @@ ALLOWED_HOSTS = [
 AUTH_USER_MODEL = 'apps.User'
 
 INSTALLED_APPS = [
-    'apps',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -51,6 +50,8 @@ INSTALLED_APPS = [
     'django_extensions',
     'rest_framework',
     'corsheaders',
+    'django_seed',
+    'apps',
 ]
 
 MIDDLEWARE = [
