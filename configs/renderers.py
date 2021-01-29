@@ -7,6 +7,7 @@ class BaseRenderer(JSONRenderer):
     object_label = 'result'
     pagination_object_label = 'results'
     pagination_object_count = 'count'
+    pagination_count_label = 'count'
 
     def render(self, data, media_type=None, renderer_context=None):
 

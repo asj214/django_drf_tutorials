@@ -5,6 +5,8 @@ from .views import (
     RegisterApiView,
     LoginApiView,
     UserApiView,
+    # posts
+    PostApiViewset,
     # example
     AesCryptoEncryptView,
     AesCryptoDecryptView,
@@ -14,7 +16,10 @@ from .views import (
 
 router = DefaultRouter(trailing_slash=False)
 
-# reference view
+# posts
+router.register(r'posts', PostApiViewset)
+
+# examples/articles
 router.register(r'examples/articles', RawQueryCRUDViewset, basename='articles')
 
 urlpatterns = [

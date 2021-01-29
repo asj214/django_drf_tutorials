@@ -18,7 +18,7 @@ POST {{BASE_URL}}/api/users/login
 Content-Type: application/json
 
 {
-    "email": "asj214@naver.com",
+    "email": "sjahn@ktown4u.com",
     "password": "rewq1234"
 }
 
@@ -64,5 +64,46 @@ Content-Type: application/json
 
 ###
 # raw articles detail
-GET {{BASE_URL}}/api/examples/articles/1
+GET {{BASE_URL}}/api/examples/articles/3
 Content-Type: application/json
+
+
+###
+# posts.list
+GET {{BASE_URL}}/api/posts
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+# posts.create
+POST {{BASE_URL}}/api/posts
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "title": "hello article",
+    "body": "im writer"
+}
+
+###
+# posts.show
+GET {{BASE_URL}}/api/posts/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###
+# posts.update
+PUT {{BASE_URL}}/api/posts/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "body": "수정 맨 ~"
+}
+
+###
+# posts.destroy
+DELETE {{BASE_URL}}/api/posts/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
