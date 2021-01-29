@@ -10,7 +10,6 @@ from configs.utils import (
     fetchall,
 )
 from configs.redis_connect import redis
-from apps.models import Post
 from apps.serializers import ArticleSerializer
 
 
@@ -51,7 +50,7 @@ class RawQueryCRUDViewset(viewsets.ViewSet):
             cursor.execute('SELECT * FROM posts WHERE 1=1 AND `deleted_at` IS NULL AND `id` = %s', [pk])
             post = fetchone(cursor)
             return post
-        except Post.DoesNotExist:
+        except Exception as e:
             raise NotFound('Does not exist.')
 
     def list(self, request):
