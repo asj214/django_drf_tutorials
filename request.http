@@ -54,3 +54,15 @@ Content-Type: application/json
 # redis set
 POST {{BASE_URL}}/api/examples/redis
 Content-Type: application/json
+
+
+###
+# raw articles list
+GET {{BASE_URL}}/api/examples/articles
+Content-Type: application/json
+
+
+###
+# raw articles detail
+GET {{BASE_URL}}/api/examples/articles/1
+Content-Type: application/json

@@ -1,3 +1,4 @@
+from collections import namedtuple
 from base64 import b64encode, b64decode
 from hashlib import sha256
 from Crypto.Cipher import AES
@@ -36,3 +37,18 @@ def aes_encrypt(data):
 
 def aes_decrypt(data):
     return AESCipher(data, SECRET_KEY).decrypt()
+
+
+def fetchone(cursor):
+    "Return all rows from a cursor as a namedtuple"
+    desc = cursor.description
+    nt_result = namedtuple('Result', [col[0] for col in desc])
+
+    return nt_result(*cursor.fetchone())
+
+
+def fetchall(cursor):
+    "Return all rows from a cursor as a namedtuple"
+    desc = cursor.description
+    nt_result = namedtuple('Result', [col[0] for col in desc])
+    return [nt_result(*row) for row in cursor.fetchall()]

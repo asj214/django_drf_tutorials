@@ -5,6 +5,7 @@ from rest_framework.validators import UniqueValidator
 from rest_framework_jwt.settings import api_settings
 from apps.models import (
     User,
+    Post
 )
 
 
@@ -76,3 +77,10 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('id', 'name', 'email', 'created_at', 'updated_at')
+
+
+class ArticleSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Post
+        fields = ('id', 'title', 'body', 'created_at', 'updated_at')

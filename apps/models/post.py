@@ -1,0 +1,22 @@
+from django.db import models
+from configs.models import BaseModel
+
+
+class Post(BaseModel):
+    user = models.ForeignKey(
+        'apps.User',
+        on_delete=models.DO_NOTHING,
+        db_constraint=False
+    )
+    title = models.CharField(verbose_name='title', max_length=75)
+    body = models.TextField()
+
+    class Meta:
+        db_table = 'posts'
+        ordering = ['-created_at', '-updated_at']
+        indexes = [
+            models.Index(fields=['deleted_at']),
+        ]
+    
+    def __str__(self):
+        return '{}: {}'.format(self.id, self.title)

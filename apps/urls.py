@@ -1,4 +1,5 @@
 from django.urls import path
+from rest_framework.routers import DefaultRouter
 from .views import (
     # authentication
     RegisterApiView,
@@ -8,8 +9,13 @@ from .views import (
     AesCryptoEncryptView,
     AesCryptoDecryptView,
     RedisView,
+    RawQueryCRUDViewset,
 )
 
+router = DefaultRouter(trailing_slash=False)
+
+# reference view
+router.register(r'examples/articles', RawQueryCRUDViewset, basename='articles')
 
 urlpatterns = [
     path('users/register', RegisterApiView.as_view()),
@@ -19,3 +25,5 @@ urlpatterns = [
     path('examples/aescrypto/decrypt', AesCryptoDecryptView.as_view()),
     path('examples/redis', RedisView.as_view()),
 ]
+
+urlpatterns += router.urls
