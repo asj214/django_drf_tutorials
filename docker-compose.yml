@@ -1,0 +1,41 @@
+version: '3'
+
+volumes:
+  mysql_data: {}
+
+services:
+  db:
+    image: mysql:5.8
+    volumes:
+      - mysql_data:/var/lib/mysql/
+    env_file:
+      - ../envs/mysql.env
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_general_ci
+    ports:
+      - "3306:3306"
+
+  django:
+    build:
+      # 빌드 명령을 실행할 디렉터리 경로
+      context: .
+      # 도커 이미지를 빌드하는데 사용할 도커파일
+      dockerfile: ./Dockerfile
+    environment:
+      - DJANGO_DEBUG=True
+      - DJANGO_DB_HOST=db
+      - DJANGO_DB_PORT=3306
+      - DJANGO_DB_NAME=django_drf_tutorials
+      - DJANGO_DB_USERNAME=sjahn
+      - DJANGO_DB_PASSWORD=rewq1234!@#
+      - DJANGO_SECRET_KEY=9&s%crvqt)7^dyrnw6c3v**ey-+0c#w)kim0hkvmwdxm&_-d2q
+    restart: always
+    ports:
+      - "8000:8000"
+    command: 
+      - bash
+      - -c
+      - |
+        /wait-for-it.sh db:3306 -t 10
+        python manage.py runserver 0:8000
+    volumes:
+      - ./:/app/
