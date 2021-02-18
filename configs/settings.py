@@ -102,7 +102,7 @@ DATABASES = {
         'NAME': env('DJANGO_DB_NAME', default='django_drf_tutorials'),
         'USER': env('DJANGO_DB_USERNAME', default='root'),
         'PASSWORD': env('DJANGO_DB_PASSWORD', default=''),
-        'HOST': env('DJANGO_DB_HOST', default='127.0.0.1'),
+        'HOST': env('DJANGO_DB_HOST', default='django_drf_tutorials-mysql'),
         'PORT': env('DJANGO_DB_PORT', default='3306'),
         # 'OPTIONS': {'charset': 'utf8mb4',},
     },
