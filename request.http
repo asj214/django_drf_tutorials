@@ -107,3 +107,4 @@ Authorization: Bearer {{token}}
 DELETE {{BASE_URL}}/api/posts/1
 Content-Type: application/json
 Authorization: Bearer {{token}}
+
