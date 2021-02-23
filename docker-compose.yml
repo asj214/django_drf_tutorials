@@ -31,6 +31,7 @@ services:
       - ./volumes/data/mysql:/var/lib/mysql/
   redis:
     restart: always
+    container_name: django_drf_tutorials-redis
     image: 'redis'
     ports:
       - '6379:6379'
