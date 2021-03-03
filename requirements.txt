@@ -15,7 +15,7 @@ jmespath==0.10.0
 mysqlclient==2.0.3
 protobuf==3.14.0
 ptvsd==4.3.2
-pycryptodome==3.9.9
+pycryptodomex==3.9.9
 PyJWT==1.7.1
 python-dateutil==2.8.1
 pytz==2020.5
