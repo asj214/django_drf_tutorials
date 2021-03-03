@@ -40,8 +40,6 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     )
     name = models.CharField(verbose_name=_('name'), max_length=30)
     is_active = models.BooleanField(verbose_name=_('Is active'), default=True)
-    level = models.IntegerField(verbose_name='level', default=100)
-
     objects = UserManager()
 
     USERNAME_FIELD = 'email'

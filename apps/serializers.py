@@ -1,11 +1,15 @@
 from django.contrib.auth import authenticate
 from django.utils import timezone
 from rest_framework import serializers
-from rest_framework.validators import UniqueValidator
+from rest_framework.validators import (
+    UniqueValidator,
+    UniqueTogetherValidator
+)
 from rest_framework_jwt.settings import api_settings
 from apps.models import (
     User,
-    Post
+    Post,
+    Category
 )
 
 
@@ -97,3 +101,25 @@ class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'title', 'body', 'created_at', 'updated_at')
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    name = serializers.CharField(max_length=50)
+    is_active = serializers.BooleanField(default=False, required=False)
+    children = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Category
+        fields = ('id', 'parent', 'depth', 'name', 'is_active', 'children')
+        validators = [
+            # 중복 체크
+            UniqueTogetherValidator(
+                queryset=Category.objects.all(),
+                fields=['depth', 'name']
+            )
+        ]
+
+    def get_children(self, instance):
+        serializer = self.__class__(instance.children, many=True)
+        serializer.bind('', self)
+        return serializer.data

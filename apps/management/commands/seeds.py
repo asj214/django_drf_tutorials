@@ -23,7 +23,6 @@ class Command(BaseCommand):
             'password': make_password('rewq1234'),
             'is_superuser': False,
             'is_active': True,
-            'level': 100,
             'last_login': timezone.now(),
             'created_at': timezone.now(),
             'updated_at': timezone.now(),

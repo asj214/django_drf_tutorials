@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     # 'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'categories',
+    'categories.editor',
     'django_extensions',
     'rest_framework',
     'corsheaders',
@@ -98,7 +100,7 @@ WSGI_APPLICATION = 'configs.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'mysql.connector.django',
         'NAME': env('DJANGO_DB_NAME', default='django_drf_tutorials'),
         'USER': env('DJANGO_DB_USERNAME', default='root'),
         'PASSWORD': env('DJANGO_DB_PASSWORD', default=''),
