@@ -1,17 +1,13 @@
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
-from rest_framework.permissions import (
-    AllowAny,
-    IsAuthenticated,
-    IsAuthenticatedOrReadOnly
-)
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from apps.serializers import CategorySerializer
 from apps.models import Category
 
 
 class CategoryViewset(viewsets.ModelViewSet):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     serializer_class = CategorySerializer
     queryset = Category.objects
 
