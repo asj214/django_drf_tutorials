@@ -18,7 +18,7 @@ POST {{BASE_URL}}/api/users/login
 Content-Type: application/json
 
 {
-    "email": "sjahn@ktown4u.com",
+    "email": "admin@abc.com",
     "password": "rewq1234"
 }
 
@@ -108,3 +108,23 @@ DELETE {{BASE_URL}}/api/posts/1
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
+
+###
+# categories.index
+GET {{BASE_URL}}/api/categories
+?category_id=1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+# categories.create
+POST {{BASE_URL}}/api/categories
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "parent_id": 4,
+    "name": "임현진",
+    "order": 1
+}

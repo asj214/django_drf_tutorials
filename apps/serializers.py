@@ -5,7 +5,8 @@ from rest_framework.validators import UniqueValidator
 from rest_framework_jwt.settings import api_settings
 from apps.models import (
     User,
-    Post
+    Post,
+    Category
 )
 
 
@@ -97,3 +98,19 @@ class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('id', 'title', 'body', 'created_at', 'updated_at')
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    name = serializers.CharField(max_length=50)
+    depth = serializers.IntegerField(default=1)
+    order = serializers.IntegerField(default=0, required=False)
+    is_active = serializers.BooleanField(default=False, required=False)
+
+    class Meta:
+        model = Category
+        fields = ('id', 'parent', 'depth', 'name', 'is_active', 'order', 'created_at', 'updated_at')
+    
+    def create(self, validated_data):
+        user = self.context.get('user', None)
+        category = Category.objects.create(user=user, **validated_data)
+        return category

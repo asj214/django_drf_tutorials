@@ -11,7 +11,7 @@ from .views import (
     AesCryptoEncryptView,
     AesCryptoDecryptView,
     RedisView,
-    RawQueryCRUDViewset,
+    CategoryViewset,
 )
 
 router = DefaultRouter(trailing_slash=False)
@@ -19,8 +19,8 @@ router = DefaultRouter(trailing_slash=False)
 # posts
 router.register(r'posts', PostApiViewset)
 
-# examples/articles
-router.register(r'examples/articles', RawQueryCRUDViewset, basename='articles')
+# categories
+router.register(r'categories', CategoryViewset)
 
 urlpatterns = [
     path('users/register', RegisterApiView.as_view()),
