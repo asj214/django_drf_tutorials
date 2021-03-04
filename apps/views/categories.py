@@ -20,7 +20,6 @@ class CategoryViewset(viewsets.ModelViewSet):
     def get_object(self, pk=None):
         try:
             user = self.queryset.get(pk=pk)
-            # self.check_object_permissions(self.request, post)
             return user
         except Category.DoesNotExist:
             raise NotFound('Does not exist.')

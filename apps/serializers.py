@@ -120,6 +120,8 @@ class CategorySerializer(serializers.ModelSerializer):
         ]
 
     def get_children(self, instance):
-        serializer = self.__class__(instance.children, many=True)
+        serializer = self.__class__(instance.children.prefetch_related(
+            'children'
+        ), many=True)
         serializer.bind('', self)
         return serializer.data
