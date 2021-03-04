@@ -10,32 +10,6 @@ from apps.serializers import CategorySerializer
 from apps.models import Category
 
 
-def category_builder(rows=[], depth=1, category_id=None):
-
-    if category_id is not None:
-        category_id = int(category_id)
-        depth = [r.depth for r in rows if r.id == category_id].pop()
-
-    ret = []
-    for row in rows:
-        if row.depth != depth:
-            continue
-        if category_id is not None and category_id != row.id:
-            continue
-
-        childs = [r for r in rows if r.parent_id == row.id]
-        ret.append({
-            'id': row.id,
-            'parent_id': row.parent_id,
-            'name': row.name,
-            'depth': row.depth,
-            'order': row.order,
-            'is_active': row.is_active,
-            'children': category_builder(rows=childs, depth=row.depth + 1)
-        })
-
-    return ret
-
 class CategoryViewset(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = CategorySerializer
@@ -51,7 +25,7 @@ class CategoryViewset(viewsets.ModelViewSet):
     def list(self, request):
         category_id = request.query_params.get('category_id', None)
         qs = self.queryset.all()
-        categories = category_builder(rows=qs, category_id=category_id)
+        categories = self.category_build(rows=qs, category_id=category_id)
         return Response({'categories': categories})
 
     def create(self, request):
@@ -83,3 +57,28 @@ class CategoryViewset(viewsets.ModelViewSet):
         category = self.get_object(pk)
         result = category.childs()
         return Response(result)
+    
+    def category_build(self, rows=[], depth=1, category_id=None):
+        if category_id is not None:
+            category_id = int(category_id)
+            depth = [r.depth for r in rows if r.id == category_id].pop()
+
+        ret = []
+        for row in rows:
+            if row.depth != depth:
+                continue
+            if category_id is not None and category_id != row.id:
+                continue
+
+            childs = [r for r in rows if r.parent_id == row.id]
+            ret.append({
+                'id': row.id,
+                'parent_id': row.parent_id,
+                'name': row.name,
+                'depth': row.depth,
+                'order': row.order,
+                'is_active': row.is_active,
+                'children': self.category_build(rows=childs, depth=row.depth + 1)
+            })
+
+        return ret
