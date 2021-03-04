@@ -2,7 +2,7 @@
 
 ###
 # register
-POST {{BASE_URL}}/api/users/register
+POST {{BASE_URL}}/api/auth/register
 Content-Type: application/json
 
 {
@@ -14,7 +14,7 @@ Content-Type: application/json
 
 ###
 # @name login
-POST {{BASE_URL}}/api/users/login
+POST {{BASE_URL}}/api/auth/login
 Content-Type: application/json
 
 {
@@ -26,7 +26,7 @@ Content-Type: application/json
 @token = {{login.response.body.result.token}}
 
 ###
-GET {{BASE_URL}}/api/users
+GET {{BASE_URL}}/api/auth/me
 Content-Type: application/json
 Authorization: Bearer {{token}}
 

@@ -23,9 +23,9 @@ router.register(r'posts', PostApiViewset)
 router.register(r'categories', CategoryViewset)
 
 urlpatterns = [
-    path('users/register', RegisterApiView.as_view()),
-    path('users/login', LoginApiView.as_view()),
-    path('users', UserApiView.as_view()),
+    path('auth/register', RegisterApiView.as_view()),
+    path('auth/login', LoginApiView.as_view()),
+    path('auth/me', UserApiView.as_view()),
     path('examples/aescrypto/encrypt', AesCryptoEncryptView.as_view()),
     path('examples/aescrypto/decrypt', AesCryptoDecryptView.as_view()),
     path('examples/redis', RedisView.as_view()),
