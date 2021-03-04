@@ -8,6 +8,9 @@ class BaseModelManager(models.Manager):
 
     def get_queryset(self):
         return super().get_queryset().filter(deleted_at__isnull=True)
+    
+    def hard_delete(self):
+        return self.get_queryset().hard_delete()
 
 class BaseModel(models.Model):
 
@@ -28,3 +31,6 @@ class BaseModel(models.Model):
     def restore(self):  # 삭제된 레코드를 복구한다.
         self.deleted_at = None
         self.save(update_fields=['deleted_at'])
+    
+    def hard_delete(self):
+        super(BaseModel, self).delete()
