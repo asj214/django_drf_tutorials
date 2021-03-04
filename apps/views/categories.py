@@ -10,12 +10,36 @@ from apps.serializers import CategorySerializer
 from apps.models import Category
 
 
+def category_builder(rows=[], depth=1, category_id=None):
+
+    if category_id is not None:
+        category_id = int(category_id)
+        depth = [r.depth for r in rows if r.id == category_id].pop()
+
+    ret = []
+    for row in rows:
+        if row.depth != depth:
+            continue
+        if category_id is not None and category_id != row.id:
+            continue
+
+        childs = [r for r in rows if r.parent_id == row.id]
+        ret.append({
+            'id': row.id,
+            'parent_id': row.parent_id,
+            'name': row.name,
+            'depth': row.depth,
+            'order': row.order,
+            'is_active': row.is_active,
+            'children': category_builder(rows=childs, depth=row.depth + 1)
+        })
+
+    return ret
+
 class CategoryViewset(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
     serializer_class = CategorySerializer
-    queryset = Category.objects.prefetch_related(
-        'children'
-    )
+    queryset = Category.objects
 
     def get_object(self, pk=None):
         try:
@@ -25,19 +49,12 @@ class CategoryViewset(viewsets.ModelViewSet):
             raise NotFound('Does not exist.')
 
     def list(self, request):
-
         category_id = request.query_params.get('category_id', None)
-        if category_id is None:
-            self.queryset = self.queryset.filter(parent=None)
-        else:
-            self.queryset = self.queryset.filter(parent=category_id)
-
-        serializer = self.serializer_class(self.queryset, many=True)
-
-        return Response(serializer.data)
+        qs = self.queryset.all()
+        categories = category_builder(rows=qs, category_id=category_id)
+        return Response({'categories': categories})
 
     def create(self, request):
-
         context = {'user': request.user, 'request': request}
         parent_id = request.data.get('parent_id', None)
         depth = 1
@@ -60,7 +77,9 @@ class CategoryViewset(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return self.list(request)
 
     def retrieve(self, request, pk=None, **kwargs):
-        return Response({'method': 'retrieve'})
+        category = self.get_object(pk)
+        result = category.childs()
+        return Response(result)

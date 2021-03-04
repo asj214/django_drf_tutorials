@@ -106,11 +106,10 @@ class ArticleSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     name = serializers.CharField(max_length=50)
     is_active = serializers.BooleanField(default=False, required=False)
-    children = serializers.SerializerMethodField()
 
     class Meta:
         model = Category
-        fields = ('id', 'parent', 'depth', 'name', 'is_active', 'children')
+        fields = ('id', 'parent', 'depth', 'name', 'is_active')
         validators = [
             # 중복 체크
             UniqueTogetherValidator(
@@ -118,10 +117,3 @@ class CategorySerializer(serializers.ModelSerializer):
                 fields=['depth', 'name']
             )
         ]
-
-    def get_children(self, instance):
-        serializer = self.__class__(instance.children.prefetch_related(
-            'children'
-        ), many=True)
-        serializer.bind('', self)
-        return serializer.data
