@@ -112,7 +112,7 @@ Authorization: Bearer {{token}}
 ###
 # categories.index
 GET {{BASE_URL}}/api/categories
-?category_id=1
+?is_admin=true
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
