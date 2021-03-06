@@ -1,7 +1,8 @@
 from django.db import models
+from configs.models import BaseModel
 
 
-class Category(models.Model):
+class Category(BaseModel):
     parent = models.ForeignKey(
         'self',
         null=True,
@@ -19,8 +20,6 @@ class Category(models.Model):
     depth = models.IntegerField(default=0)
     order = models.IntegerField(default=0)
     is_active = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = 'categories'

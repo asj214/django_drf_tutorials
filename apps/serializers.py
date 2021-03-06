@@ -10,6 +10,27 @@ from apps.models import (
 )
 
 
+class DynamicFieldsModelSerializer(serializers.ModelSerializer):
+    """
+    A ModelSerializer that takes an additional `fields` argument that
+    controls which fields should be displayed.
+    """
+
+    def __init__(self, *args, **kwargs):
+        # Don't pass the 'fields' arg up to the superclass
+        fields = kwargs.pop('fields', None)
+
+        # Instantiate the superclass normally
+        super(DynamicFieldsModelSerializer, self).__init__(*args, **kwargs)
+
+        if fields is not None:
+            # Drop any fields that are not specified in the `fields` argument.
+            allowed = set(fields)
+            existing = set(self.fields)
+            for field_name in existing - allowed:
+                self.fields.pop(field_name)
+
+
 class RegisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         max_length=100,
@@ -27,7 +48,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(serializers.Serializer):
-    email = serializers.CharField(max_length=255)
+    email = serializers.EmailField(max_length=100)
     name = serializers.CharField(max_length=255, read_only=True)
     password = serializers.CharField(max_length=128, write_only=True)
     token = serializers.SerializerMethodField()
@@ -73,11 +94,43 @@ class LoginSerializer(serializers.Serializer):
         return user
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializer(DynamicFieldsModelSerializer):
+    email = serializers.EmailField(
+        max_length=100,
+        validators=[UniqueValidator(queryset=User.objects.all())]
+    )
+    name = serializers.CharField(max_length=255)
+    is_superuser = serializers.BooleanField(default=False, required=False)
 
     class Meta:
         model = User
-        fields = ('id', 'name', 'email', 'created_at', 'updated_at')
+        fields = ('id', 'name', 'email', 'is_superuser', 'last_login', 'created_at', 'updated_at')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def update(self, instance, validated_data):
+        password = validated_data.pop('password', None)
+        for (key, value) in validated_data.items():
+            setattr(instance, key, value)
+        
+        instance.save()
+        return instance
+
+class PasswordChange(serializers.ModelSerializer):
+
+    password = serializers.CharField(max_length=128, min_length=8, required=True)
+
+    class Meta:
+        model = User
+        fields = ('id', 'name', 'email', 'password', 'is_superuser', 'last_login', 'created_at', 'updated_at')
+
+    def update(self, instance, validated_data):
+        password = validated_data.pop('password', None)
+
+        if password is not None:
+            instance.set_password(password)
+        
+        instance.save()
+        return instance
 
 
 class PostSerializer(serializers.ModelSerializer):

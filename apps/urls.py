@@ -5,6 +5,7 @@ from .views import (
     RegisterApiView,
     LoginApiView,
     UserApiView,
+    UserViewset,
     # posts
     PostApiViewset,
     # example
@@ -15,6 +16,9 @@ from .views import (
 )
 
 router = DefaultRouter(trailing_slash=False)
+
+# users
+router.register(r'users', UserViewset)
 
 # posts
 router.register(r'posts', PostApiViewset)

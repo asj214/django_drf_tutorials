@@ -17,13 +17,12 @@ class Command(BaseCommand):
         fake = Faker(["ko_KR"])
         seeder = Seed.seeder()
 
-        seeder.add_entity(User, 10, {
+        seeder.add_entity(User, 50, {
             'name': lambda x : fake.name(),
             'email': lambda x : fake.email(),
             'password': make_password('rewq1234'),
             'is_superuser': False,
             'is_active': True,
-            'level': 100,
             'last_login': timezone.now(),
             'created_at': timezone.now(),
             'updated_at': timezone.now(),
@@ -31,7 +30,7 @@ class Command(BaseCommand):
         })
 
         users = User.objects.all()
-        seeder.add_entity(Post, 10, {
+        seeder.add_entity(Post, 50, {
             'user': lambda x: random.choice(users),
             'title': lambda x : fake.sentence(),
             'body': lambda x : fake.text(),

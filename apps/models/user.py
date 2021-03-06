@@ -4,11 +4,21 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from configs.models import BaseModel
 
 
 class UserManager(BaseUserManager):
+
+    def __init__(self, *args, **kwargs):
+        self.alive_only = kwargs.pop('alive_only', True)
+        super(UserManager, self).__init__(*args, **kwargs)
+
+    def get_queryset(self):
+        if not self.alive_only:
+            return super().get_queryset()
+        return super().get_queryset().filter(deleted_at__isnull=True)
 
     def create_user(self, email, name, password=None):
         """
@@ -40,7 +50,8 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     )
     name = models.CharField(verbose_name=_('name'), max_length=30)
     is_active = models.BooleanField(verbose_name=_('Is active'), default=True)
-    level = models.IntegerField(verbose_name='level', default=100)
+
+    deleted_at = models.DateTimeField(null=True, default=None, blank=True)
 
     objects = UserManager()
 
@@ -61,3 +72,11 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         'Is the user a member of staff?'
         # Simplest possible answer: All superusers are staff
         return self.is_superuser
+
+    def delete(self, using=None, keep_parents=False):
+        self.deleted_at = timezone.now()
+        self.save(update_fields=['deleted_at'])
+
+    def restore(self):  # 삭제된 레코드를 복구한다.
+        self.deleted_at = None
+        self.save(update_fields=['deleted_at'])

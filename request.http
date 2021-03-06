@@ -128,3 +128,22 @@ Authorization: Bearer {{token}}
     "name": "임현진",
     "order": 1
 }
+
+
+###
+# users.index
+GET {{BASE_URL}}/api/users
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+###
+# users.update
+PUT {{BASE_URL}}/api/users/12
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "name": "김서주니11",
+    "is_superuser": false
+}

@@ -52,3 +52,7 @@ def fetchall(cursor):
     desc = cursor.description
     nt_result = namedtuple('Result', [col[0] for col in desc])
     return [nt_result(*row) for row in cursor.fetchall()]
+
+
+def numeric(s):
+    return ''.join([n for n in s if n in '0123456789'])

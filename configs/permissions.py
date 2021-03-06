@@ -20,5 +20,5 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
         return bool(
             obj.user == request.user
-            or request.user.level >= 900
+            or request.user.is_superuser
         )

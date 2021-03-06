@@ -1,8 +1,8 @@
 from django.db import models
-from configs.models import BaseModel
+from configs.models import BaseModel, SoftDeleteModel
 
 
-class Post(BaseModel):
+class Post(BaseModel, SoftDeleteModel):
     user = models.ForeignKey(
         'apps.User',
         on_delete=models.DO_NOTHING,

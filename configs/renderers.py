@@ -17,8 +17,10 @@ class BaseRenderer(JSONRenderer):
             return None
         elif is_dict and data.get('results', None) is not None:
             return json.dumps({
+                self.pagination_count_label: data['count'],
+                'prev': data.get('prev', None),
+                'next': data.get('next', None),
                 self.pagination_object_label: data['results'],
-                self.pagination_count_label: data['count']
             })
 
         elif is_dict and data.get('errors', None) is not None:
