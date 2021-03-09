@@ -14,7 +14,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         # 한국어로 변경, 근데 몇가지 기능은 사용할 수 없습니다.
-        fake = Faker(["ko_KR"])
+        fake = Faker(['ko_KR'])
         seeder = Seed.seeder()
 
         seeder.add_entity(User, 50, {
