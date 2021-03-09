@@ -6,7 +6,7 @@ from apps.serializers import CategorySerializer, UserSerializer
 from apps.models import Category
 
 
-class CategoryViewset(viewsets.ModelViewSet):
+class CategoryViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly,)
     serializer_class = CategorySerializer
     queryset = Category.objects.prefetch_related('user')

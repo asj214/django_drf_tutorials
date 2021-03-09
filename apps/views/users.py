@@ -65,7 +65,7 @@ class UserApiView(APIView):
         return Response(serializer.data)
 
 
-class UserViewset(viewsets.ModelViewSet):
+class UserViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated,)
     renderer_classes = (BaseRenderer,)
     serializer_class = UserSerializer
@@ -94,23 +94,23 @@ class UserViewset(viewsets.ModelViewSet):
 
 
         page = self.paginate_queryset(qs)
-        serializer = self.serializer_class(page, many=True)
+        serializer = self.serializer_class(page, many=True, ignore_private=False)
         return self.get_paginated_response(serializer.data)
 
     def create(self, request):
-        serializer = self.serializer_class(data=request.data)
+        serializer = self.serializer_class(data=request.data, ignore_private=False)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None, **kwargs):
         user = self.get_object(pk)
-        serializer = self.serializer_class(user)
+        serializer = self.serializer_class(user, ignore_private=False)
         return Response(serializer.data)
     
     def update(self, request, pk=None, **kwargs):
         user = self.get_object(pk)
-        serializer = self.serializer_class(user, data=request.data, partial=True)
+        serializer = self.serializer_class(user, data=request.data, partial=True, ignore_private=False)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
@@ -121,7 +121,7 @@ class UserViewset(viewsets.ModelViewSet):
             'password': request.data.get('password', None)
         }
 
-        serializer = PasswordChange(user, data=data, partial=True)
+        serializer = PasswordChange(user, data=data, partial=True, ignore_private=False)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)

@@ -8,7 +8,7 @@ from apps.models import Post
 from apps.serializers import PostSerializer
 
 
-class PostApiViewset(viewsets.ModelViewSet):
+class PostViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = PostSerializer
     renderer_classes = (BaseRenderer,)

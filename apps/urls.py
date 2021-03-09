@@ -5,26 +5,26 @@ from .views import (
     RegisterApiView,
     LoginApiView,
     UserApiView,
-    UserViewset,
+    UserViewSet,
     # posts
-    PostApiViewset,
+    PostViewSet,
     # example
     AesCryptoEncryptView,
     AesCryptoDecryptView,
     RedisView,
-    CategoryViewset,
+    CategoryViewSet,
 )
 
 router = DefaultRouter(trailing_slash=False)
 
 # users
-router.register(r'users', UserViewset)
+router.register(r'users', UserViewSet)
 
 # posts
-router.register(r'posts', PostApiViewset)
+router.register(r'posts', PostViewSet)
 
 # categories
-router.register(r'categories', CategoryViewset)
+router.register(r'categories', CategoryViewSet)
 
 urlpatterns = [
     path('auth/register', RegisterApiView.as_view()),

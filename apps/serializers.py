@@ -94,7 +94,7 @@ class LoginSerializer(serializers.Serializer):
         return user
 
 
-class UserSerializer(DynamicFieldsModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         max_length=100,
         validators=[UniqueValidator(queryset=User.objects.all())]
@@ -104,8 +104,16 @@ class UserSerializer(DynamicFieldsModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'name', 'email', 'is_superuser', 'last_login', 'created_at', 'updated_at')
+        fields = '__all__'
         extra_kwargs = {'password': {'write_only': True}}
+
+    def __init__(self, *args, **kwargs):
+        ignore_private = kwargs.pop('ignore_private', True)
+        super(UserSerializer, self).__init__(*args, **kwargs)
+
+        if ignore_private:
+            for field_name in ['is_superuser', 'is_active', 'deleted_at', 'groups', 'user_permissions']:
+                self.fields.pop(field_name)
 
     def update(self, instance, validated_data):
         password = validated_data.pop('password', None)
