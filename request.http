@@ -23,7 +23,7 @@ Content-Type: application/json
 }
 
 ###
-@token = {{login.response.body.result.token}}
+@token = {{login.response.body.results.token}}
 
 ###
 GET {{BASE_URL}}/api/auth/me
