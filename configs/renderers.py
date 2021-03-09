@@ -4,7 +4,7 @@ from rest_framework.renderers import JSONRenderer
 
 class BaseRenderer(JSONRenderer):
     charset = 'utf-8'
-    object_label = 'result'
+    object_label = 'results'
     pagination_object_label = 'results'
     pagination_object_count = 'count'
     pagination_count_label = 'count'

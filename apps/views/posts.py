@@ -39,7 +39,7 @@ class PostApiViewset(viewsets.ModelViewSet):
     def retrieve(self, request, pk=None, **kwargs):
         post = self.get_object(pk)
         serializer = self.serializer_class(post)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data)
 
     def create(self, request, *args, **kwargs):
         context = {'user': request.user, 'request': request}
@@ -54,7 +54,7 @@ class PostApiViewset(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data)
 
     def update(self, request, pk=None, **kwargs):
 

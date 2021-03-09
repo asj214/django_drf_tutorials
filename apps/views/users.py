@@ -33,7 +33,7 @@ class RegisterApiView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data)
 
 
 class LoginApiView(APIView):
@@ -51,7 +51,7 @@ class LoginApiView(APIView):
         # 로그인 시리얼라이즈는 ... 다 좋은데 뭔가 좀 내가 이해가 부족한건가 ...
         serializer.is_valid(raise_exception=True)
 
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data)
 
 
 class UserApiView(APIView):
