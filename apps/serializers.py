@@ -1,4 +1,6 @@
 from django.contrib.auth import authenticate
+from django.utils.translation import ugettext as _
+# from django.utils.translation import ugettext_lazy as _
 from django.utils import timezone
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
@@ -73,17 +75,15 @@ class LoginSerializer(serializers.Serializer):
         password = data.get('password', None)
 
         if email is None:
-            raise serializers.ValidationError('An email address is required to log in.')
+            raise serializers.ValidationError(_('VALIDATE_ERROR'))
 
         if password is None:
-            raise serializers.ValidationError('A password is required to log in.')
+            raise serializers.ValidationError(_('VALIDATE_ERROR'))
 
         user = authenticate(email=email, password=password)
 
         if user is None:
-            raise serializers.ValidationError(
-                'A user with this email and password was not found.'
-            )
+            raise serializers.ValidationError(_('AUTHENTICATE_ERROR'))
 
         if not user.is_active:
             raise serializers.ValidationError('This user has been deactivated.')

@@ -16,6 +16,8 @@ Content-Type: application/json
 # @name login
 POST {{BASE_URL}}/api/auth/login
 Content-Type: application/json
+Accept-Language: ko
+# Accept-Language: en
 
 {
     "email": "admin@abc.com",

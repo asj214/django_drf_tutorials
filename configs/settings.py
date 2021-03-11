@@ -9,10 +9,14 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
+import os
 from datetime import timedelta
 from pathlib import Path
 from environ import Env
 
+
+def gettext_noop(s):
+    return s
 
 env = Env()
 env.read_env(env_file='.env')
@@ -57,6 +61,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -134,6 +139,18 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
+# Languages we provide translations for, out of the box.
+LANGUAGES = [
+    ('en', gettext_noop('English')),
+    ('ja', gettext_noop('Japanese')),
+    ('ko', gettext_noop('Korean')),
+    ('th', gettext_noop('Thai')),
+    ('zh-hans', gettext_noop('Simplified Chinese')),
+    ('zh-hant', gettext_noop('Traditional Chinese')),
+]
+
+# Languages using BiDi (right-to-left) layout
+LANGUAGES_BIDI = ["he", "ar", "ar-dz", "fa", "ur"]
 
 LANGUAGE_CODE = 'ko'
 
@@ -145,6 +162,10 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+LOCALE_PATHS = (
+	os.path.join(BASE_DIR, 'locale'),
+)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/

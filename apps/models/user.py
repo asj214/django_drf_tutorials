@@ -25,7 +25,7 @@ class UserManager(BaseUserManager):
         주어진 이메일, 닉네임, 비밀번호 등 개인정보로 User 인스턴스 생성
         """
         if not email:
-            raise ValueError(_('Users must have an email address'))
+            raise ValueError('Users must have an email address')
 
         user = self.model(email=self.normalize_email(email), name=name, )
         user.set_password(password)
@@ -46,10 +46,10 @@ class UserManager(BaseUserManager):
 class User(AbstractBaseUser, PermissionsMixin, BaseModel):
 
     email = models.EmailField(
-        verbose_name=_('Email address'), max_length=255, unique=True,
+        verbose_name='Email address', max_length=255, unique=True,
     )
-    name = models.CharField(verbose_name=_('name'), max_length=30)
-    is_active = models.BooleanField(verbose_name=_('Is active'), default=True)
+    name = models.CharField(verbose_name='name', max_length=30)
+    is_active = models.BooleanField(verbose_name='Is active', default=True)
 
     deleted_at = models.DateTimeField(null=True, default=None, blank=True)
 
